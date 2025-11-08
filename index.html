@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enigma – Cultura de Qualidade</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: #0A0A21;
+      font-family: Arial, sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    img {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .container {
+      margin: 20px auto;
+      padding: 20px;
+      max-width: 600px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    label {
+      display: block;
+      margin: 10px 0;
+      font-size: 18px;
+    }
+
+    .feedback {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 16px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    @media (max-width: 480px) {
+      h2 {
+        font-size: 18px;
+      }
+      label {
+        font-size: 16px;
+      }
+      button {
+        font-size: 14px;
+        padding: 6px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <audio id="bg-music" src="Kevin-MacLeod-Investigations.mp3" loop></audio>
+
+  <img src="fundo.jpg" alt="Imagem de fundo">
+
+  <div class="container">
+    <h2>O que significa PDCA?</h2>
+    <label><input type="radio" name="resposta" value="0"> Planejar, Desenvolver, Corrigir, Avaliar</label>
+    <label><input type="radio" name="resposta" value="1"> Preparar, Diagnosticar, Controlar, Ajustar</label>
+    <label><input type="radio" name="resposta" value="2"> Planejar, Executar, Verificar, Agir</label>
+    <button onclick="verificar()">Responder</button>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <script>
+    const audio = document.getElementById("bg-music");
+
+    document.addEventListener("click", () => {
+      if (audio.paused) {
+        audio.play().catch(() => {});
+      }
+    }, { once: true });
+
+    function verificar() {
+      const opcoes = document.getElementsByName("resposta");
+      let selecionada = null;
+
+      for (let i = 0; i < opcoes.length; i++) {
+        if (opcoes[i].checked) {
+          selecionada = parseInt(opcoes[i].value);
+          break;
+        }
+      }
+
+      const feedback = document.getElementById("feedback");
+
+      if (selecionada === null) {
+        feedback.textContent = "Por favor, selecione uma opção antes de responder.";
+        return;
+      }
+
+      if (selecionada === 2) {
+        feedback.innerHTML = 'Parabéns! Você é o detetive oficial da Semana da Qualidade! Leia o Qr code e preencha suas informações,  <span style="color:#FF4500; font-weight:bold;">Participe do sorteio e BOA SORTE!</span>.';
+      } else {
+        feedback.textContent = 'Ops! Essa não é a resposta correta. Mas não desanime — aprender com os erros também faz parte da melhoria contínua.';
+      }
+
+      for (let i = 0; i < opcoes.length; i++) {
+        opcoes[i].disabled = true;
+      }
+      document.querySelector("button").disabled = true;
+    }
+  </script>
+</body>
+</html>
